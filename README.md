@@ -61,6 +61,4 @@ This export has been sanitized before publishing:
 - The real Google Sheet ID and Slack channel ID used during development have been replaced with placeholders (`YOUR_GOOGLE_SHEET_ID`, `YOUR_SLACK_ALERT_CHANNEL_ID`).
 - Internal credential reference IDs have been redacted (they're meaningless outside the original n8n instance, but stripped anyway as good practice).
 
-## A bug worth mentioning
 
-While building this, I hit a genuinely instructive failure: n8n separates the editor **draft** from the **published/active version** actually serving the webhook. I fixed a broken sheet reference, re-tested, and got the *identical* error — because every fix was landing in the draft, not the live version. The fix (clicking Publish) is trivial, but the failure mode is exactly the "worked, then silently kept not-working, no error to point at" pattern that's easy to lose hours to in production automations. Diagnosed by comparing `versionId` vs `activeVersionId` directly in n8n's SQLite database rather than guessing from the UI.
